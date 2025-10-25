@@ -12,7 +12,7 @@ import { verifyJWT } from "../middlewares/auth.middlewares.js";
 const router = express.Router();
 
 router.use(verifyJWT);
-
+router.get("/", getMyNotes);   
 router.post("/createnote", createNote);
 router.get("/getmynotes", getMyNotes);
 router.get("/:id", getNoteById);
@@ -21,3 +21,4 @@ router.delete("/:id", deleteNote);
 router.get("/publicnotes", getPublicNotes);
 
 export default router;
+
