@@ -94,7 +94,7 @@ const RegisterUser = asyncHandler(async (req, res, next) => {
 
   const user = await User.create({
     name: name.trim(),
-    email: email.trim().toLowerCase,
+    email: email.trim().toLowerCase(),
     password: password.trim(),
   });
 
@@ -106,9 +106,25 @@ const RegisterUser = asyncHandler(async (req, res, next) => {
     throw new ApiError(500, "User not created");
   }
 
-  return res
-    .status(201)
-    .json(new ApiResponse(201, "User created successfully", createdUser));
+  const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id);
+const option = { httpOnly: true, secure: true };
+
+return res
+  .status(201)
+  .cookie("accessToken", accessToken, option)
+  .cookie("refreshToken", refreshToken, option)
+  .json(
+    new ApiResponse(
+      201,
+      {
+        user: createdUser,
+        accessToken,
+        refreshToken,
+      },
+      "User created successfully"
+    )
+  );
+
 });
 
 // login user
@@ -189,5 +205,6 @@ const logoutUser = asyncHandler(async (req, res, next) => {
     .json(new ApiResponse(200, {}, "User logged Out"));
 });
 export { RegisterUser, loginUser, refreshAccessToken, logoutUser };
+
 
 
