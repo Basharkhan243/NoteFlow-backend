@@ -94,7 +94,7 @@ const RegisterUser = asyncHandler(async (req, res, next) => {
 
   const user = await User.create({
     name: name.trim(),
-    email: email.trim(),
+    email: email.trim().toLowerCase,
     password: password.trim(),
   });
 
@@ -189,4 +189,5 @@ const logoutUser = asyncHandler(async (req, res, next) => {
     .json(new ApiResponse(200, {}, "User logged Out"));
 });
 export { RegisterUser, loginUser, refreshAccessToken, logoutUser };
+
 
