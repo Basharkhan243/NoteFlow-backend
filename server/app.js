@@ -5,7 +5,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+    origin: process.env.CORS_ORIGIN || "https://noteflow-frontend01.onrender.com",
     credentials: true,
   })
 );
@@ -23,3 +23,4 @@ import noteRouter from "./routes/notes.routes.js";
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/notes", noteRouter);
 export { app };
+
