@@ -14,11 +14,8 @@ const createNote = asyncHandler(async (req, res) => {
 
   const note = await Note.create({ title, content, isPublic, user: userId });
 
-  return res.status(201).json({
-    success: true,
-    message: "Note created successfully",
-    note,
-  });
+  return res.status(201).json(new ApiResponse(201, note, "Note created successfully"));
+
 });
 
 // Get All Notes (only user's own notes)
@@ -89,3 +86,4 @@ export {
   updateNote,
   deleteNote,
 };
+
